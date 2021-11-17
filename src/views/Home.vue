@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>TOKEN: {{ token }}</div>
+    <div>TICKET: {{ ticket }}</div>
+    <div>EXP: {{ exp }}</div>    
+    <div>NOW: {{ agora }}</div>    
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  computed: {
+    agora() {
+      return new Date();
+    },
+    exp() {
+      return new Date(this.ticket.exp * 1000);
+    },
+    ...mapGetters('auth', [
+      'token', 'ticket'
+    ])
+    
   }
 }
 </script>
