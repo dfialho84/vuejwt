@@ -1,15 +1,13 @@
 import { tokenAlive, jwtDecrypt } from "@/shared/jwtUtil";
 
 const state = () => ({
-    authData: {
-        token: "",
-        ticket: {},        
-    }
+    token: "",
+    ticket: {}
 });
 
 const getters = {
     isAuthenticated(state) {
-        const tokenExp = state.authData.ticket.exp;
+        const tokenExp = state.ticket.exp;
         return tokenExp !== undefined && tokenAlive(tokenExp);
     },
     token(state) {
@@ -25,6 +23,7 @@ const actions = {
         context.commit('saveTicket', ticket);
     }
 };
+
 
 const mutations = {
     saveTicket(state, token) {

@@ -24,7 +24,7 @@ const router = createRouter({
   routes
 })
 
-function isAuthencated() {
+function isAuthenticated() {
   return store.getters["auth/isAuthenticated"];
 }
 
@@ -49,14 +49,15 @@ function processLogin(route) {
   if(cameFromCas(route)) {    
     const ticket = route.query.ticket;
     saveTicket(ticket);
+    return true;    
+  } else if(isAuthenticated()) {
     return true;
-  } else if(!isAuthencated()) {    
+  } else {    
     redirectToCas(route);
-  }
-  return false;
+  }  
 }
 
-router.beforeEach((to) => {
+router.beforeEach((to) => {  
   if(to.meta.requiredAuth) {
     return processLogin(to);
   }
